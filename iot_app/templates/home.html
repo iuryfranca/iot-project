@@ -1,0 +1,252 @@
+{% extends './layout/layout.html' %}
+<!-- . -->
+{% block content %}
+<!-- . -->
+{% load static %}
+<!-- . -->
+
+<!-- src="{% static 'images/placeholder.svg' %}" -->
+
+<style>
+  #v0-container {
+    --radius: 0.5rem;
+  }
+</style>
+<div class="flex flex-col min-h-[100dvh]">
+  <main class="flex-1">
+    <section class="w-full py-6 sm:py-12 md:py-24 lg:py-32 xl:py-48">
+      <div class="container px-4 md:px-6">
+        <div
+          class="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+          <img
+            width="550"
+            height="550"
+            alt="Gado"
+            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
+            src="{% static 'images/placeholder.svg' %}" />
+          <div class="flex flex-col justify-center space-y-4">
+            <div class="space-y-2">
+              <h1
+                class="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                Revolucione a Gestão de Gado com RFID
+              </h1>
+              <p class="max-w-[600px] text-muted-foreground md:text-xl">
+                Nossa tecnologia RFID de ponta simplifica o rastreamento,
+                monitoramento e gerenciamento do gado, capacitando os criadores
+                a otimizar suas operações.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2 min-[400px]:flex-row">
+              <a
+                class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                href="#">
+                Começar
+              </a>
+              <a
+                class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                href="#">
+                Saiba Mais
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="w-full py-12 md:py-24 lg:py-32 bg-muted">
+      <div class="container px-4 md:px-6">
+        <div
+          class="flex flex-col items-center justify-center space-y-4 text-center">
+          <div class="space-y-2">
+            <div class="inline-block rounded-lg bg-muted px-3 py-1 text-sm">
+              Gestão de Gado com RFID
+            </div>
+            <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">
+              Simplifique suas Operações de Gado
+            </h2>
+            <p
+              class="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Nossa plataforma alimentada por RFID fornece visibilidade em tempo
+              real do seu rebanho, permitindo que você tome decisões informadas,
+              melhore a produtividade e promova o bem-estar animal.
+            </p>
+          </div>
+        </div>
+        <div
+          class="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
+          <img
+            width="550"
+            height="310"
+            alt="Rastreamento de Gado"
+            src="{% static 'images/placeholder.svg' %}"
+            style=""
+            class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last" />
+          <div class="flex flex-col justify-center space-y-4">
+            <ul class="grid gap-6">
+              <li>
+                <div class="grid gap-1">
+                  <h3 class="text-xl font-bold">Rastreamento de atividades</h3>
+                  <p class="text-muted-foreground">
+                    Monitore as atividades do seu gado em tempo real com a
+                    tecnologia RFID.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div class="grid gap-1">
+                  <h3 class="text-xl font-bold">Gestão do Rebanho</h3>
+                  <p class="text-muted-foreground">
+                    Acompanhe e gerencie facilmente animais individuais,
+                    monitore a saúde e otimize a reprodução e a alimentação.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div class="grid gap-1">
+                  <h3 class="text-xl font-bold">Insights Baseados em Dados</h3>
+                  <p class="text-muted-foreground">
+                    Aproveite a análise de dados para tomar decisões informadas
+                    e melhorar a eficiência geral das suas operações de gado.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="w-full py-12 md:py-24 lg:py-32">
+      <div
+        class="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
+        <div class="space-y-2">
+          <h2 class="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+            Revolucione sua Gestão de Gado
+          </h2>
+          <p
+            class="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            Nossa plataforma alimentada por RFID fornece visibilidade em tempo
+            real do seu rebanho, permitindo que você tome decisões informadas,
+            melhore a produtividade e promova o bem-estar animal.
+          </p>
+        </div>
+        <div class="flex flex-col gap-2 min-[400px]:flex-row lg:justify-end">
+          <a
+            href="#"
+            class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+            Agende uma Demonstração
+          </a>
+          <a
+            class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+            href="#">
+            Saiba Mais
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="w-full py-12 md:py-24 lg:py-32 border-t">
+      <div
+        class="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
+        <div class="space-y-3">
+          <h2 class="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+            Experimente o Futuro da Gestão de Gado
+          </h2>
+          <p
+            class="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            Inscreva-se para ser notificado quando nossa plataforma de gestão de
+            gado alimentada por RFID for lançada.
+          </p>
+        </div>
+        <div class="mx-auto w-full max-w-sm space-y-2">
+          <form class="flex gap-2">
+            <input
+              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 max-w-lg flex-1"
+              placeholder="Digite seu email"
+              type="email" />
+            <button
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+              type="submit">
+              Inscrever-se
+            </button>
+          </form>
+          <p class="text-xs text-muted-foreground">
+            Ao se inscrever, você concorda com nossos{" "}
+            <a class="underline underline-offset-2" href="#">
+              Termos e Condições
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="w-full py-12 md:py-24 lg:py-32 bg-muted">
+      <div class="container px-4 md:px-6">
+        <div
+          class="flex flex-col items-center justify-center space-y-4 text-center">
+          <div class="space-y-2">
+            <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">
+              O que nossos clientes dizem
+            </h2>
+            <p
+              class="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Veja o que os criadores de gado estão dizendo sobre nossa
+              plataforma de gestão.
+            </p>
+          </div>
+        </div>
+        <div
+          class="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
+          <div class="flex items-start gap-4 text-sm">
+            <span
+              class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border">
+              <img
+                class="aspect-square h-full w-full"
+                alt="@shadcn"
+                src="{% static 'images/placeholder-user.jpg' %}" />
+            </span>
+            <div class="grid gap-1.5">
+              <div class="flex items-center gap-2">
+                <div class="font-semibold">João da Silva</div>
+                <div class="text-xs text-muted-foreground">2 meses atrás</div>
+              </div>
+              <div>
+                A plataforma de gestão de gado da Cattle Management tem sido
+                incrível. A análise de dados têm me ajudado a tomar decisões
+                mais informadas e melhorar a eficiência da minha fazenda.
+              </div>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 text-sm">
+            <span
+              class="relative flex shrink-0 overflow-hidden rounded-full w-10 h-10 border">
+              <img
+                class="aspect-square h-full w-full"
+                alt="@shadcn"
+                src="{% static 'images/placeholder-user.jpg' %}" />
+            </span>
+            <div class="grid gap-1.5">
+              <div class="flex items-center gap-2">
+                <div class="font-semibold">Maria Santos</div>
+                <div class="text-xs text-muted-foreground">6 meses atrás</div>
+              </div>
+              <div>
+                Estou impressionada com a facilidade de uso e a precisão da
+                tecnologia RFID. Ela me ajudou a rastrear meu rebanho com muito
+                mais eficiência e a tomar melhores decisões de gestão.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer
+    class="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+    <p class="text-xs text-muted-foreground">
+      © 2024 Gestão de Gado. Todos os direitos reservados.
+    </p>
+    <nav class="sm:ml-auto flex gap-4 sm:gap-6">
+      <a class="text-xs hover:underline underline-offset-4" href="#">
+        Termos de Serviço
+      </a>
+    </nav>
+  </footer>
+</div>
+{% endblock %}
