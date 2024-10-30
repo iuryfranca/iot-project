@@ -40,7 +40,7 @@ Este projeto tem como objetivo criar um site simples para o gerenciamento de gad
 
    ```
 
-3. Instale e configure o Tailwind CSS seguiindo esses passos [Como instalar Tailwind CSS no Django](https://tailwindcss.com/docs/installation)
+3. Instale e configure o Tailwind CSS seguiindo esses passos [Como instalar Tailwind CSS no Django](https://django-tailwind.readthedocs.io/en/latest/installation.html)
 
 ### Executando o Projeto
 
