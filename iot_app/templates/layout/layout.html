@@ -17,9 +17,46 @@
   </head>
 
   <body class="bg-gray-50 font-serif leading-normal tracking-normal">
-    <div class="container mx-auto">
-      <header class="px-4 lg:px-6 h-14 flex items-center">
-        <a class="flex items-center justify-center" href="/">
+    <header
+      class="bg-primary text-primary-foreground py-4 px-6 h-20 flex items-center justify-between">
+      <!-- TODO: Colocar verificação de login -->
+
+      <!-- <div class="flex items-center gap-4">
+        <span
+          class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+          <img
+            class="aspect-square h-full w-full"
+            alt="User Avatar"
+            src="/placeholder-user.jpg" />
+        </span>
+        <div>
+          <div class="font-medium">John Doe</div>
+          <div class="text-sm text-muted-foreground">Admin</div>
+        </div>
+      </div> -->
+
+      <div class="flex items-center gap-4">
+        <div>
+          <div class="font-medium">Seja bem vindo</div>
+          <div class="text-sm text-muted-foreground">
+            Faça login para continuar
+          </div>
+        </div>
+      </div>
+
+      <nav class="ml-auto flex gap-4 sm:gap-6">
+        <a
+          class="text-sm font-medium hover:underline underline-offset-4 flex items-center"
+          href="contato">
+          Contato
+        </a>
+        <a
+          class="inline-flex h-10 items-center justify-center rounded-md bg-secondary px-8 text-sm font-medium text-secondary-foreground shadow transition-colors hover:bg-secondary/60 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+          href="login">
+          Login
+        </a>
+        <!-- <button
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -30,35 +67,108 @@
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="h-6 w-6">
-            <path d="M8 2h8"></path>
-            <path
-              d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2"></path>
-            <path d="M7 15a6.472 6.472 0 0 1 5 0 6.47 6.47 0 0 0 5 0"></path>
+            class="lucide lucide-log-out h-5 w-5">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" x2="9" y1="12" y2="12"></line>
           </svg>
-          <span class="sr-only">Gestão de Gado</span>
-        </a>
-        <nav class="ml-auto flex gap-4 sm:gap-6">
-          <a
-            class="text-sm font-medium hover:underline underline-offset-4 flex items-center"
-            href="sobre">
-            Sobre
-          </a>
-          <a
-            class="text-sm font-medium hover:underline underline-offset-4 flex items-center"
-            href="contato">
-            Contato
-          </a>
-          <a
-            class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-            href="login">
-            Login
-          </a>
-        </nav>
-      </header>
-      <section class="flex items-start justify-center h-screen w-full">
+          <span class="sr-only">Logout</span>
+        </button> -->
+      </nav>
+    </header>
+    <div class="container mx-auto">
+      <!-- class="flex items-center justify-center h-[calc(100vh-160px)] w-full"> -->
+      <section class="flex items-center justify-center w-full">
         {% block content %} {% endblock %}
       </section>
     </div>
+    <footer
+      class="flex flex-col gap-2 sm:flex-row h-20 py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+      <p class="text-xs text-muted-foreground">
+        © 2024 Gestão de Gado. Todos os direitos reservados.
+      </p>
+      <nav class="sm:ml-auto flex gap-4 sm:gap-6">
+        <a class="text-xs hover:underline underline-offset-4" href="#">
+          Termos de Serviço
+        </a>
+      </nav>
+    </footer>
   </body>
 </html>
+
+<!-- <div class="flex flex-col h-screen">
+  <header class="bg-primary text-primary-foreground py-4 px-6 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+        <img class="aspect-square h-full w-full" alt="User Avatar" src="/placeholder-user.jpg" />
+      </span>
+      <div>
+        <div class="font-medium">John Doe</div>
+        <div class="text-sm text-muted-foreground">Admin</div>
+      </div>
+    </div>
+    <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-log-out h-5 w-5"
+      >
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+        <polyline points="16 17 21 12 16 7"></polyline>
+        <line x1="21" x2="9" y1="12" y2="12"></line>
+      </svg>
+      <span class="sr-only">Logout</span>
+    </button>
+  </header>
+  <main class="flex flex-col md:flex-row items-center justify-center flex-1">
+    <div class="w-full md:w-1/2 mt-8 md:mt-0 md:ml-8">
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="text-2xl font-semibold leading-none tracking-tight">Dashboard</h3>
+          <p class="text-sm text-muted-foreground">Manage your system modules.</p>
+        </div>
+        <div class="p-6 pt-0 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a class="block" href="#">
+              <div
+                class="rounded-lg border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors"
+                data-v0-t="card"
+              >
+                <div class="flex flex-col space-y-1.5 p-6">
+                  <h3 class="text-2xl font-semibold leading-none tracking-tight">Cattle</h3>
+                  <p class="text-sm text-muted-foreground">Manage cattle registration, listing, and editing.</p>
+                </div>
+              </div>
+            </a>
+            <a class="block" href="#">
+              <div
+                class="rounded-lg border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors"
+                data-v0-t="card"
+              >
+                <div class="flex flex-col space-y-1.5 p-6">
+                  <h3 class="text-2xl font-semibold leading-none tracking-tight">Vaccination</h3>
+                  <p class="text-sm text-muted-foreground">Manage vaccination registration, lis</p>
+                </div>
+              </div>
+            </a>
+            <a class="block" href="#">
+              <div
+                class="rounded-lg border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors"
+                data-v0-t="card"
+              >
+                <div class="flex flex-col space-y-1.5 p-6"></div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div> -->
