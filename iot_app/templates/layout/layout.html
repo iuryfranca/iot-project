@@ -16,12 +16,13 @@
     {% tailwind_css %}
   </head>
 
-  <body class="bg-gray-50 font-serif leading-normal tracking-normal">
+  <body class="bg-gray-50 font-serif leading-normal tracking-normal h-screen">
     <header
       class="bg-primary text-primary-foreground py-4 px-6 h-20 flex items-center justify-between">
       <!-- TODO: Colocar verificação de login -->
 
-      <!-- <div class="flex items-center gap-4">
+      {% if user.is_authenticated %}
+      <div class="flex items-center gap-4">
         <span
           class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
           <img
@@ -30,10 +31,12 @@
             src="/placeholder-user.jpg" />
         </span>
         <div>
-          <div class="font-medium">John Doe</div>
+          <div class="font-medium">Olá {{ user.username }}</div>
           <div class="text-sm text-muted-foreground">Admin</div>
         </div>
-      </div> -->
+      </div>
+
+      {% else %}
 
       <div class="flex items-center gap-4">
         <div>
@@ -43,6 +46,8 @@
           </div>
         </div>
       </div>
+
+      {% endif %}
 
       <nav class="ml-auto flex gap-4 sm:gap-6">
         <a
@@ -76,11 +81,11 @@
         </button> -->
       </nav>
     </header>
-    <div class="container mx-auto">
-      <!-- class="flex items-center justify-center h-[calc(100vh-160px)] w-full"> -->
-      <section class="flex items-center justify-center w-full">
-        {% block content %} {% endblock %}
-      </section>
+    <div
+      class="container mx-auto h-[calc(100vh-80px)] flex items-center justify-center w-full">
+      {% block content %} {% endblock %}
+      <!-- <section class="flex items-center justify-center w-full">
+      </section> -->
     </div>
     <footer
       class="flex flex-col gap-2 sm:flex-row h-20 py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">

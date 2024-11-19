@@ -5,6 +5,7 @@
 * {
   font-family: 'Inter', sans-serif;
   --font-sans: 'Inter';
+  box-sizing: border-box;
 }
 
 @layer base {
