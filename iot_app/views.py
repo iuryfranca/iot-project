@@ -1,9 +1,13 @@
-from django.shortcuts import render
-from django.contrib.auth.forms import User
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.contrib.auth.forms import User
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as login_django
+from django.contrib.auth import logout as logout_django
+
 import json
+
 # Create your views here.
 
 def home(request):
@@ -56,7 +60,7 @@ def cadastro(request):
                 user.save()
 
                 return HttpResponse(
-                    status=404,
+                    status=201,
                     headers={
                         'HX-Trigger': json.dumps({
                             "show-toast": {
@@ -70,6 +74,67 @@ def cadastro(request):
 
 def login(request):
     """Página de login"""
-    
-    return render(request, 'login.html')
 
+    if request.method == 'GET':
+        return render(request, 'login.html')
+    else:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login_django(request, user)
+            
+            HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "show-toast": {
+                            "level": "success",
+                            "title": "Tudo certo! 👍",
+                            "message": "Login realizado com sucesso."
+                        }
+                    })
+                }
+            )
+            
+            return HTTPResponseHXRedirect('dashboard')
+            
+            return redirect('dashboard') # Redireciona para a página de dashboard
+
+
+        else:
+            return HttpResponse(
+                status=404,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "show-toast": {
+                            "level": "error",
+                            "title": "Algo deu errado!",
+                            "message": "Usuário ou senha incorretos."
+                        }
+                    })
+                }
+            )
+            
+def logout(request):
+    """Página de logout"""
+    
+    logout_django(request)
+    
+    return redirect('login')
+
+def dashboard(request):
+    """Página de dashboard"""
+    
+    if request.user.is_authenticated:        
+        return render(request, 'dashboard.html')
+    else:        
+        return redirect('login')
+    
+class HTTPResponseHXRedirect(HttpResponseRedirect):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self['HX-Redirect']=self['Location']
+    status_code = 200
