@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import User
 from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+import json
 # Create your views here.
 
 def home(request):
@@ -8,7 +11,7 @@ def home(request):
     
     return render(request, 'home.html')
 
-def register(request):
+def cadastro(request):
     """Página de cadastro"""
     
     if request.method == 'GET':
@@ -19,18 +22,51 @@ def register(request):
         password_confirm = request.POST.get('password_confirm')
         
         if password != password_confirm:
-            return HttpResponse('Senhas nao sao iguais')
-        
+            return HttpResponse(
+                status=404,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "show-toast": {
+                            "level": "error",
+                            "title": "Algo deu errado!",
+                            "message": "Senhas não coincidem, digite a mesma senha nos dois campos."
+                        }
+                    })
+                }
+            )
+
         else:
             user = User.objects.filter(username=username).first()
             
             if user :
-                return HttpResponse('Usuário já cadastrado')
+                return HttpResponse(
+                    status=404,
+                    headers={
+                        'HX-Trigger': json.dumps({
+                            "show-toast": {
+                                "level": "error",
+                                "title": "Algo deu errado!",
+                                "message": "Usuário já cadastrado."
+                            }
+                        })
+                    }
+                )
             else:
                 user = User.objects.create_user(username, password=password)
                 user.save()
 
-                return HttpResponse('Usuário cadastrado com sucesso')
+                return HttpResponse(
+                    status=404,
+                    headers={
+                        'HX-Trigger': json.dumps({
+                            "show-toast": {
+                                "level": "success",
+                                "title": "Tudo certo! 👍",
+                                "message": "Usuário cadastrado com sucesso."
+                            }
+                        })
+                    }
+                )
 
 def login(request):
     """Página de login"""
