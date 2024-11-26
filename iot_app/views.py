@@ -5,6 +5,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
 from django.contrib.auth import logout as logout_django
+from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models.functions import ExtractMonth, ExtractYear
+from django.db.models import F, Sum, Count
+from utils.charts import months, colorPrimary, get_year_dict
+from django.http import JsonResponse
+from iot_app.models import Cattle
 
 import json
 
@@ -132,6 +138,46 @@ def dashboard(request):
         return render(request, 'dashboard.html')
     else:        
         return redirect('login')
+
+def get_filter_options(request):
+
+    grouped_cattle = Cattle.objects.annotate(year=ExtractYear("created_at")).values("year").order_by("-year").distinct()
+        
+    options = [cattle["year"] for cattle in grouped_cattle]
+
+    return JsonResponse({
+        "options": options,
+    })
+
+def get_cattle_chart(request, year):
+        
+    catties = Cattle.objects.values()
+        
+    if(catties.count() == 0):
+        return HttpResponse('Não há cattle cadastrados para o ano selecionado')
+
+    created_count_by_month = catties.filter(created_at__year=year).annotate(month=ExtractMonth("created_at")).values("month").annotate(created_count=Count('id'))
+        
+    print('created_count_by_month:', created_count_by_month)
+
+    sales_dict = get_year_dict()
+
+    for group in created_count_by_month:
+        sales_dict[months[group["month"]-1]] = round(group["created_count"], 2)
+        
+    return JsonResponse({
+        "title": f"Gado registrado no ano de {year}",
+        "data": {
+            "labels": list(sales_dict.keys()),
+            "datasets": [{
+                "label": "Quantidade: ",
+                "fill": True,
+                "borderColor": colorPrimary,
+                "tension": 0.2,
+                "data": list(sales_dict.values()),
+            }]
+        },
+    })
     
 class HTTPResponseHXRedirect(HttpResponseRedirect):
     def __init__(self, *args, **kwargs):

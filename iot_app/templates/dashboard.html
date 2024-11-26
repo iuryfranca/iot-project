@@ -11,48 +11,78 @@
         <h3 class="text-2xl font-semibold leading-none tracking-tight">
           Dashboard
         </h3>
-        <p class="text-sm text-muted-foreground">Manage your system modules.</p>
+        <p class="text-sm text-muted-foreground">
+          Selecione um módulo para gerenciar seu gado.
+        </p>
       </div>
-      <div class="flex flex-row gap-6">
-        <a href="#">
-          <div
-            class="rounded-lg min-w-60 border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
-            <div class="flex flex-col space-y-1.5 p-6">
-              <h3 class="text-2xl font-semibold leading-none tracking-tight">
-                Gado
-              </h3>
-              <p class="text-sm text-muted-foreground">
-                Gerencie o registro, listagem e edição de gado.
-              </p>
-            </div>
+      <div class="grid grid-cols-2 gap-6 w-full min-h-48">
+        <div
+          class="flex flex-col gap-6 items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
+          <span>Total de gado</span>
+          <span class="text-7xl text-center font-semibold"> 5 </span>
+        </div>
+
+        <div
+          class="flex flex-col gap-6 items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
+          <span>Total vacinados</span>
+          <span class="text-7xl text-center font-semibold"> 3 </span>
+        </div>
+      </div>
+      <div class="grid grid-cols-3 gap-6 w-full">
+        <a
+          href="#"
+          class="rounded-lg h-full relative m min-w-60 border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
+          <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight">
+              Gado
+            </h3>
+            <p class="text-sm text-muted-foreground">
+              Gerencie o registro, listagem e edição de gado.
+            </p>
           </div>
         </a>
-        <a href="#">
-          <div
-            class="rounded-lg min-w-60 border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
-            <div class="flex flex-col space-y-1.5 p-6">
-              <h3 class="text-2xl font-semibold leading-none tracking-tight">
-                Vacinação
-              </h3>
-              <p class="text-sm text-muted-foreground">
-                Gerenciamento de vacinação dos animais.
-              </p>
-            </div>
+        <a
+          href="#"
+          class="rounded-lg h-full min-w-60 border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
+          <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight">
+              Vacinação
+            </h3>
+            <p class="text-sm text-muted-foreground">
+              Gerenciamento de vacinação dos animais.
+            </p>
           </div>
         </a>
-        <a href="#">
-          <div
-            class="rounded-lg min-w-60 border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
-            <div class="flex flex-col space-y-1.5 p-6">
-              <h3 class="text-2xl font-semibold leading-none tracking-tight">
-                Nascimento
-              </h3>
-              <p class="text-sm text-muted-foreground">
-                Controle de nascimento dos animais.
-              </p>
-            </div>
+        <a
+          href="#"
+          class="rounded-lg h-full w-full m min-w-60 border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
+          <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight">
+              Nascimento
+            </h3>
+            <p class="text-sm text-muted-foreground">
+              Controle de nascimento dos animais.
+            </p>
           </div>
         </a>
+      </div>
+      <div class="flex flex-col gap-6">
+        <form
+          id="filterForm"
+          class="flex flex-row items-center justify-between gap-4 bg-[#18181b] text-[#f1f1f1] p-4 rounded-lg m-2">
+          <span>Gado cadastrado ao decorrer do ano</span>
+          <div class="flex flex-row items-center gap-4">
+            <!-- <label for="year">Selecione o ano para filtrar:</label> -->
+            <select
+              class="flex h-10 text-[#18181b] items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;>span]:line-clamp-1 m-0 w-[180px]"
+              name="year"
+              id="year"
+              onchange="loadAllCharts(this.value)"></select>
+          </div>
+        </form>
+        <canvas id="CattleChart" class="max-h-[300px]"></canvas>
+        <!-- <canvas id="FertilityChart"></canvas>
+        <canvas id="VaccinationChart"></canvas> -->
       </div>
     </div>
     <!-- <div class="w-full md:w-1/2 mt-8 md:mt-0 md:ml-8">
@@ -76,5 +106,128 @@
     </div> -->
   </main>
 </div>
+
+<script>
+  let cattleCtx = document.getElementById('CattleChart').getContext('2d')
+  let CattleChart = new Chart(cattleCtx, {
+    type: 'line',
+    options: {
+      responsive: true,
+      title: {
+        display: false,
+        text: '',
+      },
+    },
+  })
+
+  let paymentSuccessCtx = document
+    .getElementById('FertilityChart')
+    .getContext('2d')
+  let FertilityChart = new Chart(paymentSuccessCtx, {
+    type: 'pie',
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 1,
+      title: {
+        display: false,
+        text: '',
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 25,
+        },
+      },
+    },
+  })
+
+  let paymentMethodCtx = document
+    .getElementById('VaccinationChart')
+    .getContext('2d')
+  let VaccinationChart = new Chart(paymentMethodCtx, {
+    type: 'pie',
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 1,
+      title: {
+        display: false,
+        text: '',
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 25,
+        },
+      },
+    },
+  })
+</script>
+
+<script>
+  $(document).ready(function () {
+    $.ajax({
+      url: '/dashboard/cattle/filter-options',
+      type: 'GET',
+      dataType: 'json',
+      success: (jsonResponse) => {
+        // Load all the options
+        jsonResponse.options.forEach((option) => {
+          $('#year').append(new Option(option, option))
+        })
+        // Load data for the first option
+        loadAllCharts($('#year').children().first().val())
+      },
+      error: () => console.log('Failed to fetch chart filter options!'),
+    })
+  })
+
+  $('#filterForm').on('submit', (event) => {
+    event.preventDefault()
+
+    const year = $('#year').val()
+    loadAllCharts(year)
+  })
+
+  function loadChart(chart, endpoint) {
+    $.ajax({
+      url: endpoint,
+      type: 'GET',
+      dataType: 'json',
+      success: (jsonResponse) => {
+        // Extract data from the response
+        const title = jsonResponse.title
+        const labels = jsonResponse.data.labels
+        const datasets = jsonResponse.data.datasets
+
+        // Reset the current chart
+        chart.data.datasets = []
+        chart.data.labels = []
+
+        // Load new data into the chart
+        chart.options.title.text = title
+        chart.options.title.display = true
+        chart.data.labels = labels
+        datasets.forEach((dataset) => {
+          chart.data.datasets.push(dataset)
+        })
+        chart.update()
+      },
+      error: () =>
+        console.log('Failed to fetch cattle data from ' + endpoint + '!'),
+    })
+  }
+
+  function loadAllCharts(year) {
+    loadChart(CattleChart, `/dashboard/cattle/${year}/`)
+    // loadChart(FertilityChart, `/shop/cattle/fertility/${year}/`)
+    // loadChart(VaccinationChart, `/shop/cattle/vaccination/${year}/`)
+  }
+</script>
 
 {% endblock %}
