@@ -1,8 +1,8 @@
-{% load static tailwind_tags %}
+{% load compress %} {% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Django Tailwind</title>
+    <title>Django</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -25,10 +25,13 @@
       integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
       crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/rango-jquery.js' %}"></script>
 
-    {% tailwind_css %}
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}" />
+    {% endcompress %}
   </head>
 
   <body class="bg-gray-50 font-serif leading-normal tracking-normal">
@@ -151,4 +154,10 @@
       })
     </script>
   </body>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+  </style>
 </html>
