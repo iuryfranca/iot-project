@@ -61,7 +61,7 @@ Este projeto tem como objetivo criar um site simples para o gerenciamento de gad
 3. Inicie o servidor de CSS do tailwind:
 
    ```bash
-   py manage.py tailwind start
+   npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch
 
    ```
 
