@@ -2,6 +2,7 @@ module.exports = {
   content: [
     './iot_app/templates/**/*.html',
     './iot_app/templates/**/**/*.html',
+    './iot_app/templates/forms/**/*.html',
     './iot_project/templates/**/*.html',
     './node_modules/flowbite/**/*.js',
   ],

@@ -1,3 +1,5 @@
+import serial
+import time
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import User
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,6 +9,7 @@ from django.contrib.auth import login as login_django
 from django.contrib.auth import logout as logout_django
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models.functions import ExtractMonth, ExtractYear
+from django.views.decorators.csrf import csrf_protect
 from django.db.models import F, Sum, Count
 from utils.charts import months, colorPrimary, get_year_dict
 from django.http import JsonResponse
@@ -136,6 +139,47 @@ def dashboard(request):
     
     if request.user.is_authenticated:        
         return render(request, 'dashboard.html')
+    else:        
+        return redirect('login')
+
+def cattle_form_page(request):
+    """Página de formulário de cadastro de gado"""
+    
+    rfid_value = request.GET.get('rfid_value')
+    
+    if request.user.is_authenticated:        
+        return render(request, 'forms/form-cattle.html', {
+            'rfid_value': rfid_value
+        })
+    else:        
+        return redirect('login')
+
+@csrf_protect
+def get_rfid_sinal(request):
+    """Mecanismo para captar sinal do arduindo e do RFID"""
+    
+    print('get_rfid_sinal ENTROU')
+    
+    if request.method == 'POST':
+        # Adjust the COM port and baud rate to match your Arduino settings
+        arduino = serial.Serial('COM5', 9600, timeout=1)
+        
+        time.sleep(2)  # Espera o Arduino inicializar
+
+        while True:
+            data = arduino.readline().decode('utf-8').strip()
+            if data:
+                print("Resposta do Arduino:", data)
+                break
+            
+        arduino.close()
+        
+        return JsonResponse({
+            "rfid_value": data
+        })
+
+    if request.user.is_authenticated:        
+        return render(request, 'forms/form-cattle.html')
     else:        
         return redirect('login')
 
