@@ -289,6 +289,14 @@
 <script>
   let rfid_value
 
+  $(document).ready(function () {
+    const urlParams = new URLSearchParams(window.location.search)
+
+    if (urlParams.size) {
+      window.history.replaceState({}, '', `${window.location.pathname}`)
+    }
+  })
+
   $('#rfid-sinal-btn').on('click', function () {
     console.log('Botão Click RFID sinal')
 

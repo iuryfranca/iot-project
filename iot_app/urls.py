@@ -18,4 +18,7 @@ urlpatterns = [
     # Forms
     path('cadastro/gado', views.cattle_form_page, name='cattle-form-page'),
     path('cadastro/gado/rfid-sinal', views.get_rfid_sinal, name='rfid-sinal'),
+    
+    # API
+    path('api/cattle/feeding', views.get_cattle_feeding_data, name='get-cattle-feeding-data'),
 ]

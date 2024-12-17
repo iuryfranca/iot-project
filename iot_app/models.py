@@ -68,9 +68,11 @@ class Vaccination(models.Model):
 class RfidMetrics(models.Model):
     """Tabela de métricas RFID do gado."""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    cattle = models.ForeignKey(Cattle, on_delete=models.CASCADE)
+    # cattle = models.ForeignKey(Cattle, on_delete=models.CASCADE)
+    cattle_id = models.CharField(max_length=20, blank=True, null=True)
     activation_time = models.DateTimeField()
     deactivation_time = models.DateTimeField(blank=True, null=True)
+    duration_seconds = models.FloatField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

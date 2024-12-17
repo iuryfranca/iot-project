@@ -9,11 +9,11 @@ from django.contrib.auth import login as login_django
 from django.contrib.auth import logout as logout_django
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models.functions import ExtractMonth, ExtractYear
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.db.models import F, Sum, Count
 from utils.charts import months, colorPrimary, get_year_dict
 from django.http import JsonResponse
-from iot_app.models import Cattle
+from iot_app.models import Cattle, Fertility, Vaccination, RfidMetrics
 
 import json
 
@@ -85,33 +85,18 @@ def login(request):
     """Página de login"""
 
     if request.method == 'GET':
+
         return render(request, 'login.html')
     else:
         username = request.POST.get('username')
         password = request.POST.get('password')
-
+        
         user = authenticate(request, username=username, password=password)
-
+        
         if user is not None:
             login_django(request, user)
             
-            HttpResponse(
-                status=204,
-                headers={
-                    'HX-Trigger': json.dumps({
-                        "show-toast": {
-                            "level": "success",
-                            "title": "Tudo certo! 👍",
-                            "message": "Login realizado com sucesso."
-                        }
-                    })
-                }
-            )
-            
             return HTTPResponseHXRedirect('dashboard')
-            
-            return redirect('dashboard') # Redireciona para a página de dashboard
-
 
         else:
             return HttpResponse(
@@ -137,8 +122,15 @@ def logout(request):
 def dashboard(request):
     """Página de dashboard"""
     
-    if request.user.is_authenticated:        
-        return render(request, 'dashboard.html')
+    if request.user.is_authenticated:
+        
+        
+        total_registros = RfidMetrics.objects.count()
+        
+        
+        return render(request, 'dashboard.html', {
+            'total_registros': total_registros
+        })
     else:        
         return redirect('login')
 
@@ -221,8 +213,34 @@ def get_cattle_chart(request, year):
                 "data": list(sales_dict.values()),
             }]
         },
-    })
+    }) 
+
+@csrf_exempt
+def get_cattle_feeding_data(request):
+    """Método para obter dados de alimentação de gado"""
+           
+    # Pegar o ano da request
+    UID_data = request.POST["UID"]
+    first_read = request.POST["first_read"]
+    last_read = request.POST["last_read"]
+    duration_seconds = request.POST["duration_seconds"]
     
+    rfid_metrics = RfidMetrics.objects.create(cattle_id = UID_data, activation_time = first_read, deactivation_time = last_read, duration_seconds = duration_seconds)
+    rfid_metrics.save()
+    
+    return HttpResponse(
+                    status=204,
+                    headers={
+                        'HX-Trigger': json.dumps({
+                            "show-toast": {
+                                "level": "success",
+                                "title": "Tudo certo! 👍",
+                                "message": "Registro de alimentação realizado com sucesso."
+                            }
+                        })
+                    }
+                )
+
 class HTTPResponseHXRedirect(HttpResponseRedirect):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
