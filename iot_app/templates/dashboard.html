@@ -19,7 +19,9 @@
         <div
           class="flex flex-col gap-6 items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
           <span>Total de gado</span>
-          <span class="text-7xl text-center font-semibold"> 5 </span>
+          <span class="text-7xl text-center font-semibold">
+            {{ total_gado }}
+          </span>
         </div>
 
         <div
@@ -68,6 +70,11 @@
           </div>
         </a>
       </div>
+      <div
+        id="gerar-gado-aleatorio"
+        class="flex flex-col gap-6 cursor-pointer items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
+        <span>Gerar 5 animais aleatórios</span>
+      </div>
       <div class="flex flex-col gap-6">
         <form
           id="filterForm"
@@ -110,7 +117,7 @@
 </div>
 
 <script>
-  let cattleCtx = document.getElementById('CattleChart').getContext('2d')
+  let cattleCtx = document.getElementById('CattleChart')
   let CattleChart = new Chart(cattleCtx, {
     type: 'line',
     options: {
@@ -118,54 +125,6 @@
       title: {
         display: false,
         text: '',
-      },
-    },
-  })
-
-  let paymentSuccessCtx = document
-    .getElementById('FertilityChart')
-    .getContext('2d')
-  let FertilityChart = new Chart(paymentSuccessCtx, {
-    type: 'pie',
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      aspectRatio: 1,
-      title: {
-        display: false,
-        text: '',
-      },
-      layout: {
-        padding: {
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 25,
-        },
-      },
-    },
-  })
-
-  let paymentMethodCtx = document
-    .getElementById('VaccinationChart')
-    .getContext('2d')
-  let VaccinationChart = new Chart(paymentMethodCtx, {
-    type: 'pie',
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      aspectRatio: 1,
-      title: {
-        display: false,
-        text: '',
-      },
-      layout: {
-        padding: {
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 25,
-        },
       },
     },
   })
@@ -182,8 +141,11 @@
         jsonResponse.options.forEach((option) => {
           $('#year').append(new Option(option, option))
         })
+
         // Load data for the first option
         loadAllCharts($('#year').children().first().val())
+
+        console.log(jsonResponse)
       },
       error: () => console.log('Failed to fetch chart filter options!'),
     })
@@ -230,6 +192,16 @@
     // loadChart(FertilityChart, `/shop/cattle/fertility/${year}/`)
     // loadChart(VaccinationChart, `/shop/cattle/vaccination/${year}/`)
   }
+
+  $('#gerar-gado-aleatorio').on('click', function () {
+    $.ajax({
+      url: '/gerar-gado-aleatorio',
+      type: 'GET',
+      success: (jsonResponse) => {
+        console.log('Apertou a rota de gerar gado aleatorio')
+      },
+    })
+  })
 </script>
 
 {% endblock %}

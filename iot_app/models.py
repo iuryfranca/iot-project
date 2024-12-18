@@ -28,7 +28,7 @@ class Cattle(models.Model):
     slaughter_weight = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     father = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='father_cattle')
     mother = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='mother_cattle')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField()
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
