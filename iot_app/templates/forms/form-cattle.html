@@ -2,9 +2,9 @@
 <!-- . -->
 
 <div class="w-full">
-  <div
-    class="rounded-lg border bg-card text-card-foreground shadow-sm"
-    data-v0-t="card">
+  <form id="cadastro-gado" action"cadastro/gado" data-hx-post="cadastro/gado" hx-post="{% url 'cattle-form' %}" hx-swap="beforeend" method="POST" onsubmit="event.preventDefault();" class="rounded-lg border bg-card text-card-foreground shadow-sm">
+    {% csrf_token %}
+
     <div class="flex flex-col space-y-1.5 p-4">
       <h3 class="text-2xl font-semibold leading-none tracking-tight">
         Cadastro
@@ -29,19 +29,22 @@
             data-modal-target="popup-modal"
             data-modal-toggle="popup-modal"
             disabled
+            type="button"
             class="relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">
             Sucesso na identificação!
           </button>
           <input
             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             value="{{ rfid_value }}"
+            name="rfid_value"
             disabled />
           {% else %}
           <button
             id="rfid-sinal-btn"
+            type="button"
             data-modal-target="popup-modal"
             data-modal-toggle="popup-modal"
-            class="relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">
+            class="relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-transparent border-primary border-2 border-solid text-primary hover:text-primary-foreground hover:bg-primary/90 h-28 px-4 py-2 w-full">
             Buscar pela tag RFID nos arredores
           </button>
           {% endif %}
@@ -49,14 +52,28 @@
         <div class="space-y-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="nameCattle">
+            Nome do gado
+          </label>
+          <input
+            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            id="nameCattle"
+            placeholder="Nome do gado"
+            name="nameCattle"
+            type="text" />
+        </div>
+        <div class="space-y-2">
+          <label
+            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             for="gender">
             Gênero
           </label>
+
           <select
-            class="flex h-10 text-[#18181b] w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;>span]:line-clamp-1 m-0"
-            name="year"
-            id="year"
-            onchange="loadAllCharts(this.value)">
+          class="flex h-10 text-[#18181b] w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;>span]:line-clamp-1 m-0"
+          required
+          id="year"
+            onchange="loadAllCharts(this.value)" name="gender">
             <option value>Selecione uma opção</option>
             <option value="male">Masculino</option>
             <option value="female">Feminino</option>
@@ -73,18 +90,6 @@
             id="birth-date"
             name="birth_date"
             type="date" />
-        </div>
-        <div class="space-y-2">
-          <label
-            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            for="description">
-            Descrição
-          </label>
-          <textarea
-            class="flex min-h-[130px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            id="description"
-            name="description"
-            placeholder="Descrição do animal"></textarea>
         </div>
       </div>
 
@@ -134,6 +139,18 @@
         <div class="space-y-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="description">
+            Descrição
+          </label>
+          <textarea
+            class="flex min-h-[130px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            id="description"
+            name="description"
+            placeholder="Descrição do animal"></textarea>
+        </div>
+        {% comment %} <div class="space-y-2">
+          <label
+            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             for="father">
             Pai
           </label>
@@ -143,7 +160,7 @@
               name="father"
               class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               placeholder="Pesquise pelo animal paterno..."
-              required />
+            />
             <div
               class="absolute top-0 end-0 h-full p-2.5 text-sm font-medium text-white bg-primary rounded-e-lg border border-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:focus:ring-blue-800">
               <svg
@@ -175,7 +192,7 @@
               name="mother"
               class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               placeholder="Pesquise pelo animal materno..."
-              required />
+            />
             <div
               class="absolute top-0 end-0 h-full p-2.5 text-sm font-medium text-white bg-primary rounded-e-lg border border-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:focus:ring-blue-800">
               <svg
@@ -194,17 +211,18 @@
               <span class="sr-only">Search</span>
             </div>
           </div>
-        </div>
+        </div> {% endcomment %}
       </div>
     </div>
 
     <div class="flex items-center p-4">
       <button
+        type="submit"
         class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">
         Cadastrar
       </button>
     </div>
-  </div>
+  </form>
 </div>
 
 <div

@@ -132,9 +132,7 @@
 
     <script>
       document.addEventListener('show-toast', (event) => {
-        const { level, message, title } = event.detail
-
-        console.log(event)
+        const { level, message, title } = event?.detail
 
         toastr[level](message, title, {
           closeButton: true,

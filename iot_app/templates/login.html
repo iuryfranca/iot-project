@@ -3,17 +3,12 @@
 <div class="flex flex-col h-full py-2">
   <main class="flex flex-col md:flex-row items-center justify-center flex-1">
     <div class="w-full">
-      <img
-        src="{% static 'images/placeholder.svg' %}"
-        width="1200"
-        height="800"
-        alt="Image"
+      <img src="{% static 'images/gado/6.jpg' %}" width="1200" height="800" alt="Image"
         class="aspect-[3/2] w-full object-cover rounded-lg" />
     </div>
     <div class="w-full md:w-1/2 mt-8 md:mt-0 md:ml-8">
-      <form
-        id="login-data"
-        hx-post="{% url 'login' %}"
+      
+      <form id="login-data" hx-post="{% url 'login' %}"
         class="rounded-lg border bg-card text-card-foreground shadow-sm">
         {% csrf_token %}
         <div class="flex flex-col space-y-1.5 p-6">
@@ -26,35 +21,26 @@
         </div>
         <div class="p-6 pt-0 space-y-4">
           <div class="space-y-2">
-            <label
-              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               for="user">
               Usuário
             </label>
-            <input
-              required
+            <input required
               class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              name="username"
-              placeholder="usuário"
-              type="text" />
+              name="username" placeholder="usuário" type="text" />
           </div>
           <div class="space-y-2">
-            <label
-              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               for="password">
               Senha
             </label>
-            <input
-              required
+            <input required
               class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              name="password"
-              type="password"
-              placeholder="********" />
+              name="password" type="password" placeholder="********" />
           </div>
         </div>
         <div class="flex flex-col gap-4 items-center p-6 pt-0">
-          <button
-            type="submit"
+          <button type="submit"
             class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">
             Entrar
           </button>

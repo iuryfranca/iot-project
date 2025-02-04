@@ -16,8 +16,9 @@ urlpatterns = [
     path('dashboard/cattle/filter-options', views.get_filter_options, name='years-cattle-filter-options'),
     
     # Forms
-    path('cadastro/gado', views.cattle_form_page, name='cattle-form-page'),
+    path('cadastro/gado', views.cattle_form_page, name='cattle-form'),
     path('cadastro/gado/rfid-sinal', views.get_rfid_sinal, name='rfid-sinal'),
+    # path('register/gado/form', views.register_cattle_form, name='register_cattle_form'),
     
     # API
     path('gerar-gado-aleatorio', views.criar_gado, name='criar-gado-aleatorio'),

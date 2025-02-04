@@ -142,28 +142,61 @@ def cattle_form_page(request):
     
     rfid_value = request.GET.get('rfid_value')
     
-    if request.user.is_authenticated:        
-        return render(request, 'forms/form-cattle.html', {
-            'rfid_value': rfid_value
-        })
-    else:        
+    if request.user.is_authenticated == False:
         return redirect('login')
+    
+    if request.method == 'GET':
+        return render(request, 'forms/form-cattle.html', {
+            'rfid_value': rfid_value or ''
+        })
+    if request.method == 'POST': 
+        nameCattle = request.POST.get('nameCattle')
+        gender = request.POST.get('gender')
+        birth_date = request.POST.get('birth_date')
+        description = request.POST.get('description')
+        birth_weight = request.POST.get('birth_weight')
+        weaning_weight = request.POST.get('weaning_weight')
+        slaughter_weight = request.POST.get('slaughter_weight')
+        father = request.POST.get('father') or None
+        mother = request.POST.get('mother') or None
+        created_at = datetime.now()
+        updated_at = datetime.now()
+                
+        # Criação do objeto Cattle no banco de dados
+        cattle = Cattle.objects.create(
+            RFID=rfid_value,
+            nameCattle=nameCattle,
+            gender=gender,
+            birth_date=birth_date,
+            description=description,
+            birth_weight=birth_weight,
+            weaning_weight=weaning_weight,
+            slaughter_weight=slaughter_weight,
+            father=father,
+            mother=mother,
+            created_at=created_at,
+            updated_at=updated_at
+        )
+
+        cattle.save()
+
+        return HttpResponse(
+            status=201,
+            headers={
+                'HX-Trigger': json.dumps({
+                    "show-toast": {
+                        "level": "success",
+                        "title": "Cadastro realizado com sucesso!",
+                        "message": "O gado" + cattle.nameCattle + " foi cadastrado com sucesso."
+                    }
+                })
+            }
+        )
 
 def register_cattle_form(request):
     """Página de cadastro de gado"""
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    
-    #     RFID = models.CharField(max_length=20, blank=True, null=True)
-    # gender = models.CharField(max_length=6, choices=[('Male', 'Male'), ('Female', 'Female')])
-    # birth_date = models.DateField()
-    # description = models.CharField(max_length=500, blank=True, null=True)
-    # birth_weight = models.DecimalField(max_digits=5, decimal_places=2)
-    # weaning_weight = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-    # slaughter_weight = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
-    # father = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='father_cattle')
-    # mother = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='mother_cattle')
-    
+
+    print(request.POST, "Testeeeeeeee")
     
     gender = request.POST.get('gender')
     birth_date = request.POST.get('birth_date')
@@ -173,11 +206,9 @@ def register_cattle_form(request):
     slaughter_weight = request.POST.get('slaughter_weight')
     father = request.POST.get('father')
     mother = request.POST.get('mother')
-
-    created_at = datetime.now()
     
     # Criação do objeto Cattle no banco de dados
-    Cattle.objects.create(
+    cattle = Cattle.objects.create(
         RFID=None,
         gender=gender,
         birth_date=birth_date,
@@ -185,6 +216,15 @@ def register_cattle_form(request):
         birth_weight=birth_weight,
         weaning_weight=weaning_weight,
         slaughter_weight=slaughter_weight,
+        father=father,
+        mother=mother
+    )
+
+    cattle.save()
+    
+    return JsonResponse({
+        "rfid_value": cattle.RFID
+    })
 
 @csrf_protect
 def get_rfid_sinal(request):
