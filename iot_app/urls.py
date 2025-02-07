@@ -20,6 +20,9 @@ urlpatterns = [
     path('cadastro/gado/rfid-sinal', views.get_rfid_sinal, name='rfid-sinal'),
     # path('register/gado/form', views.register_cattle_form, name='register_cattle_form'),
     
+    # Listagens
+    path('listagem/gado', views.cattle_list, name='cattle-list'),
+    
     # API
     path('gerar-gado-aleatorio', views.criar_gado, name='criar-gado-aleatorio'),
     # path('api/cattle/feeding', views.get_cattle_feeding_data, name='get-cattle-feeding-data'),

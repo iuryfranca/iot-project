@@ -1,0 +1,162 @@
+{% extends '../layout/layout.html' %} {% block content %} {% load static %}
+<!-- . -->
+
+<div class="w-full flex flex-col gap-8">
+  <div class="flex flex-col gap-4">
+    <h1
+      class="text-gray-700 font-extrabold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      Listagem de Gado
+    </h1>
+  </div>
+
+  <div class="flex flex-col gap-4">
+    <div class="relative overflow-x-auto">
+      <table
+        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-tr-sm rounded-tl-sm">
+          <tr>
+            <th scope="col" class="px-6 py-3">Nome</th>
+            <th scope="col" class="px-6 py-3">RFID</th>
+            <th scope="col" class="px-6 py-3">Sexo</th>
+            <th scope="col" class="px-6 py-3">Data de nascimento</th>
+            <th scope="col" class="px-6 py-3">Peso ao nascer</th>
+            <th scope="col" class="px-6 py-3">Peso ao desmame</th>
+            <th scope="col" class="px-6 py-3">Peso ao abate</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cattle in catties %}
+          <tr
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+            <th
+              scope="row"
+              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              {{ cattle.nameCattle }}
+            </th>
+            <td class="px-6 py-4">{{ cattle.RFID }}</td>
+            <td class="px-6 py-4">{{ cattle.gender }}</td>
+            <td class="px-6 py-4">{{ cattle.birth_date }}</td>
+            <td class="px-6 py-4">{{ cattle.birth_weight }}</td>
+            <td class="px-6 py-4">{{ cattle.weaning_weight }}</td>
+            <td class="px-6 py-4">{{ cattle.slaughter_weight }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div
+  id="popup-modal"
+  tabindex="-1"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <button
+        id="modal-close-btn"
+        type="button"
+        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        data-modal-hide="popup-modal">
+        <svg
+          class="w-3 h-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 14">
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+      <div class="p-4 md:p-5 text-center flex flex-col gap-8">
+        <div class="flex justify-center items-center p-20">
+          <span class="relative flex h-20 w-20">
+            <span
+              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary/60"></span>
+            <span
+              class="relative rounded-full h-20 w-20 bg-primary flex justify-center items-center">
+              <svg
+                width="48px"
+                height="48px"
+                class="text-white"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M6.62012 16.4414V18H5.46289V13.7168H6.86621C8.03027 13.7168 8.6123 14.1387 8.6123 14.9824C8.6123 15.4785 8.37012 15.8623 7.88574 16.1338L9.13379 18H7.82129L6.91309 16.4414H6.62012ZM6.62012 15.5713H6.83691C7.24121 15.5713 7.44336 15.3926 7.44336 15.0352C7.44336 14.7402 7.24512 14.5928 6.84863 14.5928H6.62012V15.5713Z" />
+                <path
+                  d="M10.6631 18H9.52344V13.7168H12.0547V14.6455H10.6631V15.4629H11.9463V16.3916H10.6631V18Z" />
+                <path d="M12.7578 18V13.7168H13.9209V18H12.7578Z" />
+                <path
+                  d="M18.4854 15.7676C18.4854 16.4824 18.2881 17.0332 17.8936 17.4199C17.501 17.8066 16.9482 18 16.2354 18H14.8496V13.7168H16.332C17.0195 13.7168 17.5498 13.8926 17.9229 14.2441C18.2979 14.5957 18.4854 15.1035 18.4854 15.7676ZM17.2842 15.8086C17.2842 15.416 17.2061 15.125 17.0498 14.9355C16.8955 14.7461 16.6602 14.6514 16.3438 14.6514H16.0068V17.0508H16.2646C16.6162 17.0508 16.874 16.9492 17.0381 16.7461C17.2021 16.541 17.2842 16.2285 17.2842 15.8086Z" />
+                <path
+                  d="M17 9C17 10.1046 16.1046 11 15 11C13.8954 11 13 10.1046 13 9C13 7.89543 13.8954 7 15 7C16.1046 7 17 7.89543 17 9Z" />
+                <path
+                  d="M10.0588 4L9 2H4C2.89543 2 2 2.89543 2 4V20C2 21.1046 2.89543 22 4 22H20C21.1046 22 22 21.1046 22 20V15L20 13.9412V20H4V4H10.0588Z" />
+                <path
+                  d="M21.9469 12.9698C22.6169 11.7999 22.9998 10.4447 22.9998 9C22.9998 4.58172 19.4181 1 14.9998 1C13.5551 1 12.1999 1.38295 11.03 2.05287L12.0225 3.78965C12.8998 3.28721 13.9163 3 14.9998 3C18.3135 3 20.9998 5.68629 20.9998 9C20.9998 10.0835 20.7126 11.1 20.2102 11.9773L21.9469 12.9698Z" />
+                <path
+                  d="M19.3418 11.4811C19.7605 10.75 19.9998 9.90293 19.9998 9C19.9998 6.23858 17.7612 4 14.9998 4C14.0969 4 13.2498 4.23934 12.5187 4.65804L13.5111 6.39483C13.9498 6.14361 14.458 6 14.9998 6C16.6567 6 17.9998 7.34315 17.9998 9C17.9998 9.54176 17.8562 10.05 17.605 10.4887L19.3418 11.4811Z" />
+              </svg>
+            </span>
+          </span>
+        </div>
+
+        {% if rfid_value %}
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+          Tag RFID identificado com sucesso!
+        </h3>
+        <p class="text-sm font-bold text-muted-foreground">{{ rfid_value }}</p>
+        {% else %}
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+          Aproxime a tag RFID para identificarmos o código da tag.
+        </h3>
+        {% endif %}
+
+        <div class="flex flex-row gap-4 justify-center items-center">
+          <button
+            data-modal-hide="popup-modal"
+            type="button"
+            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            Pronto
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let rfid_value
+
+  $(document).ready(function () {
+    const urlParams = new URLSearchParams(window.location.search)
+
+    if (urlParams.size) {
+      window.history.replaceState({}, '', `${window.location.pathname}`)
+    }
+  })
+
+  $('#rfid-sinal-btn').on('click', function () {
+    console.log('Botão Click RFID sinal')
+
+    $.ajax({
+      url: '/cadastro/gado/rfid-sinal',
+      type: 'POST',
+      dataType: 'json',
+      success: (jsonResponse) => {
+        rfid_value = jsonResponse.rfid_value
+        $('#modal-close-btn').click()
+        window.location.href = `/cadastro/gado?rfid_value=${rfid_value}`
+      },
+    })
+  })
+</script>
+
+{% endblock %}

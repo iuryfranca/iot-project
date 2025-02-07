@@ -226,6 +226,18 @@ def register_cattle_form(request):
         "rfid_value": cattle.RFID
     })
 
+def cattle_list(request):
+    """Página de listagem de gado"""
+    
+    if request.user.is_authenticated:
+        catties = Cattle.objects.all()
+        
+        return render(request, 'listagem/listagem-cattle.html', {
+            'catties': catties
+        })
+    else:        
+        return redirect('login')
+
 @csrf_protect
 def get_rfid_sinal(request):
     """Mecanismo para captar sinal do arduindo e do RFID"""
@@ -349,15 +361,19 @@ def gerar_description():
     return fake.sentence()
 
 def gerar_created_at():
-    created_at_naive = fake.date_time_this_year(before_now=True, after_now=False, tzinfo=None)
+    created_at_naive = fake.date_time_this_decade(before_now=True, after_now=False, tzinfo=None)
     
     return created_at_naive
+
+def gerar_nameCattle():
+    return fake.name()
 
 # Função de view que cria dados aleatórios
 def criar_gado(request):
     # Gera dados aleatórios e cria 5 objetos Cattle
     for _ in range(5):
         RFID = gerar_rfid()
+        nameCattle = gerar_nameCattle()
         gender = gerar_gender()
         birth_date = gerar_birth_date()
         description = gerar_description()
@@ -373,6 +389,7 @@ def criar_gado(request):
         # Criação do objeto Cattle no banco de dados
         Cattle.objects.create(
             RFID=RFID,
+            nameCattle=nameCattle,
             gender=gender,
             birth_date=birth_date,
             description=description,

@@ -4,7 +4,7 @@
 <!-- . -->
 {% load static %}
 
-<div class="flex flex-col h-full p-6 2xl:p-0">
+<div class="flex w-full flex-col h-full p-6 2xl:p-0">
   <main class="flex flex-col md:flex-row items-center justify-center">
     <div class="w-full flex flex-col gap-4">
       <div class="flex flex-col space-y-1.5">
@@ -33,47 +33,190 @@
         </div>
       </div>
       <div class="grid grid-cols-3 gap-6 w-full">
-        <a
-          href="/cadastro/gado"
-          class="rounded-lg h-full relative m min-w-60 border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
-          <div class="flex flex-col space-y-1.5 p-6">
-            <h3 class="text-2xl font-semibold leading-none tracking-tight">
-              Gado
-            </h3>
-            <p class="text-sm text-muted-foreground">
-              Gerencie o registro, listagem e edição de gado.
-            </p>
+        <div>
+          <button
+            id="dropdownDefaultButton1"
+            data-dropdown-toggle="dropdown1"
+            class="w-full h-16 justify-between border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+            type="button">
+            Gerenciar Gado
+            <svg
+              class="w-2.5 h-2.5 ms-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6">
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div
+            id="dropdown1"
+            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700">
+            <ul
+              class="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelle
+              w-fulldby="dropdownDefaultButton1">
+              <a
+                href="/cadastro/gado"
+                class="rounded-lg h-full relative bg-card text-card-foreground p-4 hover:bg-muted transition-colors block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                <div class="flex flex-col space-y-1.5 p-6">
+                  <h3
+                    class="text-2xl font-semibold leading-none tracking-tight">
+                    Cadastro
+                  </h3>
+                  <p class="text-sm text-muted-foreground">
+                    Realize o cadastro de gado.
+                  </p>
+                </div>
+              </a>
+              <a
+                href="/listagem/gado"
+                class="rounded-lg h-full relative bg-card text-card-foreground p-4 hover:bg-muted transition-colors block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                <div class="flex flex-col space-y-1.5 p-6">
+                  <h3
+                    class="text-2xl font-semibold leading-none tracking-tight">
+                    Listagem de cadastros
+                  </h3>
+                  <p class="text-sm text-muted-foreground">
+                    Listagem de cadastros de gado.
+                  </p>
+                </div>
+              </a>
+            </ul>
           </div>
-        </a>
-        <a
-          href="#"
-          class="rounded-lg h-full min-w-60 border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
-          <div class="flex flex-col space-y-1.5 p-6">
-            <h3 class="text-2xl font-semibold leading-none tracking-tight">
-              Vacinação
-            </h3>
-            <p class="text-sm text-muted-foreground">
-              Gerenciamento de vacinação dos animais.
-            </p>
+        </div>
+
+        <div>
+          <button
+            id="dropdownDefaultButton2"
+            data-dropdown-toggle="dropdown2"
+            class="w-full h-16 justify-between border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+            type="button">
+            Gerenciar Vacinação
+            <svg
+              class="w-2.5 h-2.5 ms-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6">
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div
+            id="dropdown2"
+            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700">
+            <ul
+              class="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelle
+              w-fulldby="dropdownDefaultButton2">
+              <a
+                href="/cadastro/gado"
+                class="rounded-lg h-full relative bg-card text-card-foreground p-4 hover:bg-muted transition-colors block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                <div class="flex flex-col space-y-1.5 p-6">
+                  <h3
+                    class="text-2xl font-semibold leading-none tracking-tight">
+                    Cadastro de vacinação
+                  </h3>
+                  <p class="text-sm text-muted-foreground">
+                    Realize o cadastro de vacinação.
+                  </p>
+                </div>
+              </a>
+              <a
+                href="/cadastro/gado"
+                class="rounded-lg h-full relative bg-card text-card-foreground p-4 hover:bg-muted transition-colors block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                <div class="flex flex-col space-y-1.5 p-6">
+                  <h3
+                    class="text-2xl font-semibold leading-none tracking-tight">
+                    Listagem de vacinação
+                  </h3>
+                  <p class="text-sm text-muted-foreground">
+                    Listagem de vacinação.
+                  </p>
+                </div>
+              </a>
+            </ul>
           </div>
-        </a>
-        <a
-          href="#"
-          class="rounded-lg h-full w-full m min-w-60 border bg-card text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
-          <div class="flex flex-col space-y-1.5 p-6">
-            <h3 class="text-2xl font-semibold leading-none tracking-tight">
-              Nascimento
-            </h3>
-            <p class="text-sm text-muted-foreground">
-              Controle de nascimento dos animais.
-            </p>
+        </div>
+
+        <div>
+          <button
+            id="dropdownDefaultButton3"
+            data-dropdown-toggle="dropdown3"
+            class="w-full h-16 justify-between border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+            type="button">
+            Gerenciar Nascimento
+            <svg
+              class="w-2.5 h-2.5 ms-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6">
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div
+            id="dropdown3"
+            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700">
+            <ul
+              class="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelle
+              w-fulldby="dropdownDefaultButton3">
+              <a
+                href="/cadastro/gado"
+                class="rounded-lg h-full relative bg-card text-card-foreground p-4 hover:bg-muted transition-colors block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                <div class="flex flex-col space-y-1.5 p-6">
+                  <h3
+                    class="text-2xl font-semibold leading-none tracking-tight">
+                    Cadastro de nascimento
+                  </h3>
+                  <p class="text-sm text-muted-foreground">
+                    Realize o cadastro de nascimento.
+                  </p>
+                </div>
+              </a>
+              <a
+                href="/cadastro/gado"
+                class="rounded-lg h-full relative bg-card text-card-foreground p-4 hover:bg-muted transition-colors block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                <div class="flex flex-col space-y-1.5 p-6">
+                  <h3
+                    class="text-2xl font-semibold leading-none tracking-tight">
+                    Listagem de nascimento
+                  </h3>
+                  <p class="text-sm text-muted-foreground">
+                    Listagem de nascimento.
+                  </p>
+                </div>
+              </a>
+            </ul>
           </div>
-        </a>
+        </div>
       </div>
       <div
         id="gerar-gado-aleatorio"
         class="flex flex-col gap-6 cursor-pointer items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
-        <span>Gerar 5 animais aleatórios</span>
+        <span class="select-none">Gerar 5 animais aleatórios</span>
       </div>
       <div class="flex flex-col gap-6">
         <form
