@@ -22,6 +22,7 @@ urlpatterns = [
     
     # Listagens
     path('listagem/gado', views.cattle_list, name='cattle-list'),
+    path('listagem/rfid', views.rfid_list, name='rfid-list'),
     
     # API
     path('gerar-gado-aleatorio', views.criar_gado, name='criar-gado-aleatorio'),

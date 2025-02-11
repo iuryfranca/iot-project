@@ -238,7 +238,117 @@ def cattle_list(request):
     else:        
         return redirect('login')
 
-@csrf_protect
+def rfid_list(request):
+    """Página de listagem de RFID, retornando dados combinados do RFID e do gado (Cattle)"""
+    
+    if not request.user.is_authenticated:
+        return redirect('login')
+    
+    rfids = RfidMetrics.objects.all().order_by('-created_at')
+    resultado = []
+    
+    # Variáveis para contagem dos períodos de ativação
+    cont_man = 0
+    cont_tarde = 0
+    cont_noite = 0
+    
+    # Dicionário para acumular a soma dos duration_seconds para cada gado
+    cattle_counts = {}
+    
+    for rfid in rfids:
+        # Busca o gado correspondente usando o campo cattle_id, se existir
+        cattle = Cattle.objects.filter(RFID=rfid.cattle_id).first() if rfid.cattle_id else None
+
+        # Processar activation_time para contagem dos períodos
+        if rfid.activation_time:
+            try:
+                # Se activation_time for string, tenta convertê-la para datetime
+                if isinstance(rfid.activation_time, str):
+                    dt_ativacao = datetime.strptime(rfid.activation_time, '%Y-%m-%d %H:%M:%S')
+                    hora = dt_ativacao.hour
+                else:
+                    hora = rfid.activation_time.hour
+                
+                if 6 <= hora < 12:
+                    cont_man += 1
+                elif 12 <= hora < 18:
+                    cont_tarde += 1
+                elif 18 <= hora <= 23:
+                    cont_noite += 1
+            except Exception as e:
+                print("Erro ao processar activation_time:", e)
+        
+        # Acumula a soma dos duration_seconds para o gado, se existir
+        if cattle:
+            try:
+                duration = float(rfid.duration_seconds) if rfid.duration_seconds is not None else 0
+            except Exception as e:
+                print("Erro ao converter duration_seconds:", e)
+                duration = 0
+                
+            if cattle.id in cattle_counts:
+                cattle_counts[cattle.id]['duration_sum'] += duration
+            else:
+                cattle_counts[cattle.id] = {'duration_sum': duration, 'object': cattle}
+        
+        rfid_data = {
+            "id": rfid.id,
+            "activation_time": rfid.activation_time,
+            "deactivation_time": rfid.deactivation_time,
+            "duration_seconds": rfid.duration_seconds,
+            "created_at": rfid.created_at.strftime("%Y-%m-%d %H:%M:%S") if rfid.created_at else None,
+            "updated_at": rfid.updated_at.strftime("%Y-%m-%d %H:%M:%S") if rfid.updated_at else None,
+        }
+        
+        cattle_data = None
+        if cattle:
+            cattle_data = {
+                "id": cattle.id,
+                "nameCattle": cattle.nameCattle,
+                "RFID": cattle.RFID,
+                "gender": cattle.gender,
+                "birth_date": cattle.birth_date.strftime("%Y-%m-%d") if cattle.birth_date else None,
+                "description": cattle.description,
+                "birth_weight": cattle.birth_weight,
+                "weaning_weight": cattle.weaning_weight,
+                "slaughter_weight": cattle.slaughter_weight,
+                "created_at": cattle.created_at.strftime("%Y-%m-%d %H:%M:%S") if cattle.created_at else None,
+                "updated_at": cattle.updated_at.strftime("%Y-%m-%d %H:%M:%S") if cattle.updated_at else None,
+            }
+        
+        resultado.append({
+            "rfid": rfid_data,
+            "cattle": cattle_data
+        })
+        
+        print(resultado)
+        
+    # Verifica qual período possui mais registros
+    periodos = {
+        "De Manha": cont_man,
+        "De Tarde": cont_tarde,
+        "De Noite": cont_noite
+    }
+    periodo_mais_registros = max(periodos, key=periodos.get)
+    
+    # Identifica o gado com maior e menor total de duration_seconds
+    if cattle_counts:
+        max_cattle_info = max(cattle_counts.values(), key=lambda x: x['duration_sum'])
+        min_cattle_info = min(cattle_counts.values(), key=lambda x: x['duration_sum'])
+        cattle_maior_registro = max_cattle_info['object']
+        cattle_menor_registro = min_cattle_info['object']
+    else:
+        cattle_maior_registro = None
+        cattle_menor_registro = None
+    
+    return render(request, 'listagem/listagem-rfid.html', {
+        'rfidsAndCatties': resultado,
+        'periodoMaisRegistros': periodo_mais_registros,
+        'cattleMaiorRegistro': cattle_maior_registro,
+        'cattleMenorRegistro': cattle_menor_registro,
+    })
+
+# @csrf_protect
 def get_rfid_sinal(request):
     """Mecanismo para captar sinal do arduindo e do RFID"""
     
@@ -309,34 +419,10 @@ def get_cattle_chart(request, year):
                 "data": list(sales_dict.values()),
             }]
         },
-    }) 
+    })
 
-# @csrf_exempt
-# def get_cattle_feeding_data(request):
-#     """Método para obter dados de alimentação de gado"""
-           
-#     # Pegar o ano da request
-#     UID_data = request.POST["UID"]
-#     first_read = request.POST["first_read"]
-#     last_read = request.POST["last_read"]
-#     duration_seconds = request.POST["duration_seconds"]
-    
-#     rfid_metrics = RfidMetrics.objects.create(cattle_id = UID_data, activation_time = first_read, deactivation_time = last_read, duration_seconds = duration_seconds)
-#     rfid_metrics.save()
-    
-#     return HttpResponse(
-#                     status=204,
-#                     headers={
-#                         'HX-Trigger': json.dumps({
-#                             "show-toast": {
-#                                 "level": "success",
-#                                 "title": "Tudo certo! 👍",
-#                                 "message": "Registro de alimentação realizado com sucesso."
-#                             }
-#                         })
-#                     }
-#                 )
 
+# Gerar dados Fake
 fake = Faker()
 
 def gerar_rfid():

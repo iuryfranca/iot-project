@@ -17,7 +17,7 @@
       </div>
       <div class="grid grid-cols-2 gap-6 w-full min-h-48">
         <div
-          class="flex flex-col gap-6 items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
+          class="flex flex-col gap-6 items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#18181b] text-[#f1f1f1] shadow-sm p-4 hover:bg-[#393941] transition-colors">
           <span>Total de gado</span>
           <span class="text-7xl text-center font-semibold">
             {{ total_gado }}
@@ -25,7 +25,7 @@
         </div>
 
         <div
-          class="flex flex-col gap-6 items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
+          class="flex flex-col gap-6 items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#18181b] text-[#f1f1f1] shadow-sm p-4 hover:bg-[#393941] transition-colors">
           <span>Total de dados RFID</span>
           <span class="text-7xl text-center font-semibold">
             {{ total_registros }}
@@ -213,11 +213,19 @@
           </div>
         </div>
       </div>
-      <div
-        id="gerar-gado-aleatorio"
-        class="flex flex-col gap-6 cursor-pointer items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
-        <span class="select-none">Gerar 5 animais aleatórios</span>
-      </div>
+
+      <a
+        href="/listagem/rfid"
+        class="flex flex-col gap-6 items-center justify-center rounded-lg h-full w-full min-w-60 border-2 border-[#18181b] text-[#18181b] shadow-sm p-4 hover:bg-[#18181b20] transition-colors">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="text-2xl font-semibold leading-none tracking-tight">
+            Métricas do RFID
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            Listagem de registros e métricas do RFID.
+          </p>
+        </div>
+      </a>
       <div class="flex flex-col gap-6">
         <form
           id="filterForm"
@@ -235,6 +243,11 @@
         <canvas id="CattleChart" class="max-h-[300px]"></canvas>
         <!-- <canvas id="FertilityChart"></canvas>
         <canvas id="VaccinationChart"></canvas> -->
+      </div>
+      <div
+        id="gerar-gado-aleatorio"
+        class="flex flex-col gap-6 cursor-pointer items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#E0E1E1] text-card-foreground shadow-sm p-4 hover:bg-muted transition-colors">
+        <span class="select-noneG">Gerar 5 animais aleatórios</span>
       </div>
     </div>
     <!-- <div class="w-full md:w-1/2 mt-8 md:mt-0 md:ml-8">
@@ -302,11 +315,15 @@
   })
 
   function loadChart(chart, endpoint) {
+    console.log('loadChart', endpoint)
+
     $.ajax({
       url: endpoint,
       type: 'GET',
       dataType: 'json',
       success: (jsonResponse) => {
+        console.log('jsonResponse', jsonResponse)
+
         // Extract data from the response
         const title = jsonResponse.title
         const labels = jsonResponse.data.labels

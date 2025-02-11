@@ -1,0 +1,101 @@
+{% extends '../layout/layout.html' %} {% block content %} {% load static %}
+<!-- . -->
+
+<div class="w-full flex flex-col gap-8">
+  <div class="flex flex-col gap-4">
+    <h1
+      class="text-gray-700 font-extrabold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      Registros do RFID
+    </h1>
+  </div>
+
+  <div class="flex flex-row gap-6 w-full min-h-48">
+    <div
+      class="flex flex-col gap-6 items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#18181b] text-[#f1f1f1] shadow-sm p-4 hover:bg-[#393941] transition-colors">
+      <span>Período com mais registros</span>
+      <span class="text-5xl text-center font-semibold">
+        {{ periodoMaisRegistros }}
+      </span>
+    </div>
+
+    <div
+      class="flex flex-col gap-6 items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#18181b] text-[#f1f1f1] shadow-sm p-4 hover:bg-[#393941] transition-colors">
+      <span>Gado com mais registros</span>
+      <div class="flex flex-col gap-2 items-center">
+        <span class="text-3xl text-center font-semibold">
+          {{ cattleMaiorRegistro.nameCattle }}
+        </span>
+        <span class="text-3xl text-center font-semibold">
+          {{ cattleMaiorRegistro.RFID }}
+        </span>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col gap-6 items-center justify-center rounded-lg h-full w-full min-w-60 border bg-[#18181b] text-[#f1f1f1] shadow-sm p-4 hover:bg-[#393941] transition-colors">
+      <span>Gado com menos registros</span>
+      <div class="flex flex-col gap-2 items-center">
+        <span class="text-3xl text-center font-semibold">
+          {{ cattleMenorRegistro.nameCattle }}
+        </span>
+        <span class="text-3xl text-center font-semibold">
+          {{ cattleMenorRegistro.RFID }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-4">
+    <div class="relative overflow-x-auto">
+      <table
+        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-tr-sm rounded-tl-sm">
+          <tr>
+            <th scope="col" class="px-6 py-3">Nome</th>
+            <th scope="col" class="px-6 py-3">RFID</th>
+            <th scope="col" class="px-6 py-3">Sexo</th>
+            <th scope="col" class="px-6 py-3">Data de nascimento</th>
+            <th scope="col" class="px-6 py-3">Peso ao nascer</th>
+            <th scope="col" class="px-6 py-3">Peso ao desmame</th>
+            <th scope="col" class="px-6 py-3">Peso ao abate</th>
+            <th scope="col" class="px-6 py-3">Tempo de ativação</th>
+            <th scope="col" class="px-6 py-3">Tempo de desativação</th>
+            <th scope="col" class="px-6 py-3">Duração</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in rfidsAndCatties %}
+          <tr
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+            <th
+              scope="row"
+              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              {{ item.cattle.nameCattle }}
+            </th>
+            <td class="px-6 py-4">{{ item.cattle.RFID }}</td>
+            <td class="px-6 py-4">{{ item.cattle.gender }}</td>
+            <td class="px-6 py-4">{{ item.cattle.birth_date }}</td>
+            <td class="px-6 py-4">{{ item.cattle.birth_weight }}</td>
+            <td class="px-6 py-4">{{ item.cattle.weaning_weight }}</td>
+            <td class="px-6 py-4">{{ item.cattle.slaughter_weight }}</td>
+            <td class="px-6 py-4">
+              {{ item.rfid.activation_time|date:"H:i, d \d\e F \d\e Y" }}
+            </td>
+            <td class="px-6 py-4">
+              {{ item.rfid.deactivation_time|date:"H:i, d \d\e F \d\e Y" }}
+            </td>
+            <td class="px-6 py-4">
+              {{ item.rfid.duration_seconds|floatformat:2 }}s
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script></script>
+
+{% endblock %}

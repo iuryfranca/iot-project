@@ -59,14 +59,6 @@ try:
                     "last_read": times['last_read'].strftime('%Y-%m-%d %H:%M:%S'),
                     "duration_seconds": (times['last_read'] - times['first_read']).total_seconds(),
                 }
-                        
-                # url = "http://127.0.0.1:8000/api/cattle/feeding"
-                # postToApp = requests.post(url, {
-                #     'UID': uid,
-                #     'first_read': times['first_read'].strftime('%Y-%m-%d %H:%M:%S'),
-                #     'last_read': times['last_read'].strftime('%Y-%m-%d %H:%M:%S'),
-                #     'duration_seconds': (times['last_read'] - times['first_read']).total_seconds(),
-                # })
                 
                 conn.execute("INSERT INTO iot_app_rfidmetrics (id, activation_time, deactivation_time, created_at, updated_at, duration_seconds, cattle_id) VALUES (?, ?, ?, ?, ?, ?, ?)", (uuid.uuid4().hex, data['first_read'], data['last_read'], now.strftime('%Y-%m-%d %H:%M:%S'), now.strftime('%Y-%m-%d %H:%M:%S'), data['duration_seconds'], data['uid']))
                 conn.commit()
