@@ -195,9 +195,6 @@ def cattle_form_page(request):
 
 def register_cattle_form(request):
     """Página de cadastro de gado"""
-
-    print(request.POST, "Testeeeeeeee")
-    
     gender = request.POST.get('gender')
     birth_date = request.POST.get('birth_date')
     description = request.POST.get('description')
@@ -230,7 +227,7 @@ def cattle_list(request):
     """Página de listagem de gado"""
     
     if request.user.is_authenticated:
-        catties = Cattle.objects.all()
+        catties = Cattle.objects.all().order_by('-created_at')
         
         return render(request, 'listagem/listagem-cattle.html', {
             'catties': catties
@@ -426,7 +423,7 @@ def get_cattle_chart(request, year):
 fake = Faker()
 
 def gerar_rfid():
-    return random.choice(['2e c7 91 ab', '53 e6 d8 9a', 'c1 47 0c 19'])
+    return random.choice(['2e c7 91 ab', 'c1 47 0c 19'])
 
 def gerar_gender():
     return random.choice(['Male', 'Female'])
