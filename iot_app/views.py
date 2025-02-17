@@ -150,6 +150,7 @@ def cattle_form_page(request):
             'rfid_value': rfid_value or ''
         })
     if request.method == 'POST': 
+        rfid_input = request.POST.get('rfid_input')
         nameCattle = request.POST.get('nameCattle')
         gender = request.POST.get('gender')
         birth_date = request.POST.get('birth_date')
@@ -164,7 +165,7 @@ def cattle_form_page(request):
                 
         # Criação do objeto Cattle no banco de dados
         cattle = Cattle.objects.create(
-            RFID=rfid_value,
+            RFID=rfid_input or None,
             nameCattle=nameCattle,
             gender=gender,
             birth_date=birth_date,
@@ -192,36 +193,6 @@ def cattle_form_page(request):
                 })
             }
         )
-
-def register_cattle_form(request):
-    """Página de cadastro de gado"""
-    gender = request.POST.get('gender')
-    birth_date = request.POST.get('birth_date')
-    description = request.POST.get('description')
-    birth_weight = request.POST.get('birth_weight')
-    weaning_weight = request.POST.get('weaning_weight')
-    slaughter_weight = request.POST.get('slaughter_weight')
-    father = request.POST.get('father')
-    mother = request.POST.get('mother')
-    
-    # Criação do objeto Cattle no banco de dados
-    cattle = Cattle.objects.create(
-        RFID=None,
-        gender=gender,
-        birth_date=birth_date,
-        description=description,
-        birth_weight=birth_weight,
-        weaning_weight=weaning_weight,
-        slaughter_weight=slaughter_weight,
-        father=father,
-        mother=mother
-    )
-
-    cattle.save()
-    
-    return JsonResponse({
-        "rfid_value": cattle.RFID
-    })
 
 def cattle_list(request):
     """Página de listagem de gado"""

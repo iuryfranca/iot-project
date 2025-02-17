@@ -18,7 +18,6 @@ urlpatterns = [
     # Forms
     path('cadastro/gado', views.cattle_form_page, name='cattle-form'),
     path('cadastro/gado/rfid-sinal', views.get_rfid_sinal, name='rfid-sinal'),
-    # path('register/gado/form', views.register_cattle_form, name='register_cattle_form'),
     
     # Listagens
     path('listagem/gado', views.cattle_list, name='cattle-list'),

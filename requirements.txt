@@ -1,0 +1,5 @@
+django
+django_browser_reload
+django_compressor
+pyserial
+faker
